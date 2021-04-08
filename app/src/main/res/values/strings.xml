@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Submission1</string>
+    <string name="item_img_desc">Film Poster</string>
+    <string name="splashscreen_logo">Logo Splashscreen</string>
+    <string name="splashscreen_title">Dicoding Jetpack 1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>
