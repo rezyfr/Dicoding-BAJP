@@ -1,4 +1,4 @@
-package com.rezyfr.submission1
+package com.rezyfr.dicoding.bajp
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

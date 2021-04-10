@@ -5,7 +5,7 @@
 
         <variable
             name="item"
-            type="com.rezyfr.submission1.data.ItemEntity" />
+            type="com.rezyfr.dicoding.bajp.data.ItemEntity" />
 
     </data>
 

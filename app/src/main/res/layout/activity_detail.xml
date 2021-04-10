@@ -7,13 +7,13 @@
 
         <variable
             name="item"
-            type="com.rezyfr.submission1.data.ItemEntity" />
+            type="com.rezyfr.dicoding.bajp.data.ItemEntity" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.detail.DetailActivity">
+        tools:context="com.rezyfr.dicoding.bajp.ui.detail.DetailActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

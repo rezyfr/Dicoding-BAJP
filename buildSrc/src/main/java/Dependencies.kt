@@ -1,5 +1,5 @@
 object DefaultConfig {
-    const val appId = "com.rezyfr.submission1"
+    const val appId = "com.rezyfr.dicoding.bajp"
 
     const val minSdk = 21
     const val targetSdk = 30
