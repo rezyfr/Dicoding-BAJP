@@ -1,5 +1,5 @@
 object DefaultConfig {
-    const val appId = "com.rezyfr.submission1"
+    const val appId = "com.rezyfr.dicoding.bajp"
 
     const val minSdk = 21
     const val targetSdk = 30
@@ -25,15 +25,32 @@ object Versions {
     const val fragmentKtxVersion = "1.2.5"
     const val lifecycleVersion = "1.1.1"
     const val navVersion = "2.3.4"
+    const val lifecycleKtxVersion = "2.3.1"
+
+    const val hiltVersion = "1.0.0-alpha03"
+    const val daggerHiltVersion = "2.32-alpha"
+
+    const val retrofitVersion = "2.7.1"
+    const val okHttpInterceptorVersion = "4.5.0"
+    const val okHttpVersion = "4.7.2"
+
+    const val pagingVersion = "3.0.0-alpha12"
+
+    const val timberVersion = "4.7.1"
 
     const val glideVersion = "4.10.0"
     const val glideLegacyVersion = "1.0.0"
     const val glideKaptVersion = "4.10.0"
 
-    const val mockkVersion = "1.10.0"
     const val junitVersion = "4.13"
     const val extJunitVersion = "1.1.2"
     const val espressoVersion = "3.3.0"
+    const val androidCoreTestVersion = "2.1.0"
+    const val androidTestVersion = "1.3.0"
+    const val mockitoVersion = "3.6.0"
+    const val mockitoKotlinVersion = "2.2.0"
+    const val idleResourceVersion = "3.3.0"
+    const val mockkVersion = "1.10.0"
 }
 
 object Dependencies {
@@ -47,10 +64,37 @@ object Dependencies {
     const val activityKtx = "androidx.activity:activity-ktx:${Versions.activityKtxVersion}"
     const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.fragmentKtxVersion}"
     const val lifeCycle = "android.arch.lifecycle:extensions:${Versions.lifecycleVersion}"
+    const val lifecycleViewmodel =
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleKtxVersion}"
+    const val lifecycleLiveData =
+        "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleKtxVersion}"
 
     // Other
     const val navFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navVersion}"
     const val navUi = "androidx.navigation:navigation-ui-ktx:${Versions.navVersion}"
+
+    // hilt
+    const val hilt = "androidx.hilt:hilt-common:${Versions.hiltVersion}"
+    const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hiltVersion}"
+    const val hiltCompiler = "androidx.hilt:hilt-compiler:${Versions.hiltVersion}" //kapt
+    const val daggerHiltAndroid = "com.google.dagger:hilt-android:${Versions.daggerHiltVersion}"
+    const val daggerHiltCompiler = "com.google.dagger:hilt-compiler:${Versions.daggerHiltVersion}"
+    const val hiltTest =
+        "com.google.dagger:hilt-android-testing:${Versions.daggerHiltVersion}" //androidTestImplementation
+
+    const val pagingRuntime = "androidx.paging:paging-runtime:${Versions.pagingVersion}"
+
+    // Timber
+    const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
+
+    // Retrofit
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"
+    const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofitVersion}"
+
+    // OkHttp
+    const val interceptor =
+        "com.squareup.okhttp3:logging-interceptor:${Versions.okHttpInterceptorVersion}"
+    const val okHttp = "com.squareup.okhttp3:okhttp:${Versions.okHttpVersion}"
 
     // Glide
     const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
@@ -58,10 +102,18 @@ object Dependencies {
     const val glideKapt = "com.github.bumptech.glide:compiler:${Versions.glideKaptVersion}"
 
     // Test
-    const val mockk = "io.mockk:mockk:${Versions.mockkVersion}"
     const val junit = "junit:junit:${Versions.junitVersion}"
     const val extJunit = "androidx.test.ext:junit:${Versions.extJunitVersion}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
     const val espressoContrib =
         "androidx.test.espresso:espresso-contrib:${Versions.espressoVersion}"
+    const val testRule = "androidx.test:rules:${Versions.androidTestVersion}"
+
+    const val mockk = "io.mockk:mockk:${Versions.mockkVersion}"
+    const val mockitoCore = "org.mockito:mockito-core:${Versions.mockitoVersion}"
+    const val mockitoInline = "org.mockito:mockito-inline:${Versions.mockitoVersion}"
+    const val mockitoKotlin =
+        "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlinVersion}"
+    const val coreTest = "androidx.arch.core:core-testing:${Versions.androidCoreTestVersion}"
+    const val idlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.idleResourceVersion}"
 }

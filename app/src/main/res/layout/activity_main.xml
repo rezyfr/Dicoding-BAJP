@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.rezyfr.dicoding.bajp.ui.MainActivity">
 
-    <LinearLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.main.MainActivity">
+        android:layout_height="match_parent">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_main"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tablayout_main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/design_default_color_primary"
-                app:tabIndicatorColor="@color/design_default_color_on_primary"
-                app:tabSelectedTextColor="@color/design_default_color_on_primary"
-                app:tabTextAppearance="@style/MainTabTextStyle"
-                app:tabTextColor="@color/design_default_color_on_primary" />
-        </androidx.viewpager.widget.ViewPager>
-    </LinearLayout>
-</layout>
+            android:layout_height="wrap_content"
+            android:background="@color/design_default_color_primary"
+            app:tabIndicatorColor="@color/design_default_color_on_primary"
+            app:tabSelectedTextColor="@color/design_default_color_on_primary"
+            app:tabTextAppearance="@style/MainTabTextStyle"
+            app:tabTextColor="@color/design_default_color_on_primary" />
+    </androidx.viewpager.widget.ViewPager>
+</LinearLayout>

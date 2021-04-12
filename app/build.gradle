@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -18,6 +19,11 @@ android {
         versionName Releases.versionName
 
         testInstrumentationRunner DefaultConfig.testRunner
+
+        buildConfigField('String', 'BASE_URL', "\"https://api.themoviedb.org/\"")
+        buildConfigField('String', 'IMAGE_URL', "\"https://image.tmdb.org/t/p/w200/\"")
+        buildConfigField("String", "BACKDROP_URL", "\"https://image.tmdb.org/t/p/w500\"")
+        buildConfigField("String", "API_KEY", "\"2cdf3a5c7cf412421485f89ace91e373\"")
     }
 
     buildTypes {
@@ -43,6 +49,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     packagingOptions {
@@ -51,7 +58,6 @@ android {
 }
 
 dependencies {
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation Dependencies.kotlin
@@ -66,16 +72,32 @@ dependencies {
     implementation Dependencies.navUi
     implementation Dependencies.glide
     implementation Dependencies.glideLegacy
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation Dependencies.lifecycleViewmodel
+    implementation Dependencies.lifecycleLiveData
     kapt Dependencies.glideKapt
 
+    implementation Dependencies.retrofit
+    implementation Dependencies.retrofitGson
+    implementation Dependencies.okHttp
+    implementation Dependencies.interceptor
+    implementation Dependencies.pagingRuntime
+    
     testImplementation Dependencies.junit
-    testImplementation Dependencies.mockk
+    androidTestImplementation Dependencies.junit
     androidTestImplementation Dependencies.extJunit
     androidTestImplementation Dependencies.espresso
     androidTestImplementation Dependencies.espressoContrib
+    androidTestImplementation Dependencies.testRule
+    implementation Dependencies.idlingResource
+    testImplementation Dependencies.mockitoCore
+    testImplementation Dependencies.mockitoInline
+    testImplementation Dependencies.mockitoKotlin
+    testImplementation Dependencies.coreTest
+    testImplementation Dependencies.mockk
+
+    implementation Dependencies.hilt
+    implementation Dependencies.hiltViewModel
+    kapt Dependencies.hiltCompiler
+    implementation Dependencies.daggerHiltAndroid
+    implementation Dependencies.daggerHiltCompiler
 }
