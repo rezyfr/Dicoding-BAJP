@@ -6,8 +6,12 @@
     <data>
 
         <variable
-            name="item"
-            type="com.rezyfr.dicoding.bajp.data.ItemEntity" />
+            name="movie"
+            type="com.rezyfr.dicoding.bajp.data.source.local.entity.MovieEntity" />
+
+        <variable
+            name="tv"
+            type="com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -21,8 +25,12 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
+                app:title="@{movie.itemTitle ?? tv.tvTitle}"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="@color/white"
+                android:theme="@style/ToolbarColoredBackArrow"
                 android:background="@color/design_default_color_primary" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -38,7 +46,7 @@
                 android:layout_width="150dp"
                 android:layout_height="225dp"
                 android:contentDescription="@string/item_img_desc"
-                app:imageResource="@{item.itemPhoto}"
+                imageUrl="@{movie.posterImage ?? tv.posterImage}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +57,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_toEndOf="@id/img_detail"
                 android:fontFamily="sans-serif-black"
-                android:text="@{item.itemTitle}"
+                android:text="@{movie.itemTitle ?? tv.tvTitle}"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +74,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@id/img_detail"
                 android:fontFamily="sans-serif-light"
-                android:text="@{item.itemDate}"
+                android:text="@{movie.itemDate ?? tv.tvDate}"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +90,7 @@
                 android:layout_below="@id/img_detail"
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif-condensed-medium"
-                android:text="@{item.itemDesc}"
+                android:text="@{movie.itemDesc ?? tv.tvDesc}"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

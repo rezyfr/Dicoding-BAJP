@@ -1,13 +1,17 @@
 package com.rezyfr.dicoding.bajp.ui.detail
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.rezyfr.dicoding.bajp.R
+import com.rezyfr.dicoding.bajp.data.source.local.entity.MovieEntity
+import com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity
 import com.rezyfr.dicoding.bajp.databinding.ActivityDetailBinding
 import com.rezyfr.dicoding.bajp.utils.Constant
+import com.rezyfr.dicoding.bajp.utils.hideLoadingDialog
+import com.rezyfr.dicoding.bajp.utils.showLoadingDialog
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
@@ -24,20 +28,32 @@ class DetailActivity : AppCompatActivity() {
         val key = intent.getStringExtra(Constant.FRAGMENT_KEY)
         val itemId = intent.getIntExtra(Constant.ITEM_ID, 0)
         key?.let {
-            vm.setSelectedItem(itemId)
-            val item = vm.getItemById(it)
-            binding.item = item
+            showLoadingDialog()
+            if (key == Constant.KEY_MOVIE) {
+                vm.getMovieById(itemId).observe(this, ::observeMovieDetail)
+            } else {
+                vm.getTvById(itemId).observe(this, ::observeTvDetail)
+            }
         }
     }
 
+    private fun observeMovieDetail(movie: MovieEntity) {
+        binding.movie = movie
+        hideLoadingDialog()
+    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.home -> {
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
+    private fun observeTvDetail(tv: TvEntity) {
+        binding.tv = tv
+        hideLoadingDialog()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        hideLoadingDialog()
     }
 }

@@ -5,13 +5,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.rezyfr.dicoding.bajp.utils.Constant
 
-class MainViewPagerAdapter(
+class ListViewPagerAdapter(
     fm: FragmentManager
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val pages = listOf(
-        MainFragment.newInstance(Constant.KEY_MOVIE),
-        MainFragment.newInstance(Constant.KEY_TV)
+        ListFragment.newInstance(Constant.KEY_MOVIE),
+        ListFragment.newInstance(Constant.KEY_TV)
     )
 
     override fun getItem(position: Int): Fragment = pages[position]

@@ -3,10 +3,10 @@ package com.rezyfr.dicoding.bajp.utils
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 
-fun ImageView.loadEclipseImage(drawable: Int) {
+fun ImageView.loadImage(url: String) {
     try {
         Glide.with(context)
-            .load(drawable)
+            .load(url)
             .into(this)
     } catch (e: Exception) {
         e.printStackTrace()

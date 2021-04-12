@@ -1,9 +1,12 @@
-package com.rezyfr.dicoding.bajp.ui.main
+package com.rezyfr.dicoding.bajp.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.rezyfr.dicoding.bajp.databinding.ActivityMainBinding
+import com.rezyfr.dicoding.bajp.ui.main.ListViewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -14,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
-            vpMain.adapter = MainViewPagerAdapter(supportFragmentManager)
+            vpMain.adapter = ListViewPagerAdapter(supportFragmentManager)
             tablayoutMain.setupWithViewPager(vpMain)
         }
     }

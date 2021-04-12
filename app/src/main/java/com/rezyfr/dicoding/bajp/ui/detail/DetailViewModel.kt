@@ -1,29 +1,17 @@
 package com.rezyfr.dicoding.bajp.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.rezyfr.dicoding.bajp.data.ItemEntity
-import com.rezyfr.dicoding.bajp.utils.Constant
-import com.rezyfr.dicoding.bajp.utils.DataDummy
+import com.rezyfr.dicoding.bajp.data.source.IMainRepository
+import com.rezyfr.dicoding.bajp.data.source.local.entity.MovieEntity
+import com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class DetailViewModel : ViewModel() {
-
-    private var itemId = 0
-
-    fun setSelectedItem(itemId: Int) {
-        this.itemId = itemId
-    }
-
-    fun getItemById(key: String): ItemEntity {
-        lateinit var item: ItemEntity
-
-        val itemsEntities = if (key == Constant.KEY_MOVIE) DataDummy.generateDummyMovies()
-        else DataDummy.generateDummyTvShows()
-
-        for (itemEntity in itemsEntities) {
-            if (itemEntity.id == itemId) {
-                item = itemEntity
-            }
-        }
-        return item
-    }
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    private val repository: IMainRepository
+) : ViewModel() {
+    fun getMovieById(id: Int): LiveData<MovieEntity> = repository.getMovieDetail(id)
+    fun getTvById(id: Int): LiveData<TvEntity> = repository.getTvDetail(id)
 }
