@@ -9,7 +9,6 @@ import com.rezyfr.dicoding.bajp.data.source.remote.response.MovieDetailResponse
 import com.rezyfr.dicoding.bajp.data.source.remote.response.MovieResponse
 import com.rezyfr.dicoding.bajp.data.source.remote.response.TvDetailResponse
 import com.rezyfr.dicoding.bajp.data.source.remote.response.TvResponse
-import com.rezyfr.dicoding.bajp.utils.EspressoIdlingResource
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +18,6 @@ class MainRepository @Inject constructor(
 ) : IMainRepository {
     override fun getMovieList(): LiveData<List<MovieEntity>> {
         val movieResults = MutableLiveData<List<MovieEntity>>()
-        EspressoIdlingResource.increment()
         remoteDataSource.getMovieList(object : RemoteDataSource.GetMovieListCallback {
             override fun onResponse(response: List<MovieResponse>) {
                 val movieEntities = response.map {
@@ -28,7 +26,6 @@ class MainRepository @Inject constructor(
                     )
                 }
                 movieResults.postValue(movieEntities)
-                EspressoIdlingResource.decrement()
             }
         })
         return movieResults
@@ -36,7 +33,6 @@ class MainRepository @Inject constructor(
 
     override fun getTvList(): LiveData<List<TvEntity>> {
         val tvResults = MutableLiveData<List<TvEntity>>()
-        EspressoIdlingResource.increment()
         remoteDataSource.getTvList(object : RemoteDataSource.GetTvListCallback {
             override fun onResponse(response: List<TvResponse>) {
                 val tvEntities = response.map {
@@ -45,7 +41,6 @@ class MainRepository @Inject constructor(
                     )
                 }
                 tvResults.postValue(tvEntities)
-                EspressoIdlingResource.decrement()
             }
         })
         return tvResults
@@ -53,7 +48,6 @@ class MainRepository @Inject constructor(
 
     override fun getMovieDetail(id: Int): LiveData<MovieEntity> {
         val movieResult = MutableLiveData<MovieEntity>()
-        EspressoIdlingResource.increment()
         remoteDataSource.getMovieDetail(object : RemoteDataSource.GetMovieDetailCallback {
             override fun onResponse(response: MovieDetailResponse) {
                 val movieEntity = MovieEntity(
@@ -64,7 +58,6 @@ class MainRepository @Inject constructor(
                     response.releaseDate
                 )
                 movieResult.postValue(movieEntity)
-                EspressoIdlingResource.decrement()
             }
         }, id)
         return movieResult
@@ -72,7 +65,6 @@ class MainRepository @Inject constructor(
 
     override fun getTvDetail(id: Int): LiveData<TvEntity> {
         val tvResult = MutableLiveData<TvEntity>()
-        EspressoIdlingResource.increment()
         remoteDataSource.getTvDetail(object : RemoteDataSource.GetTvDetailCallback {
             override fun onResponse(response: TvDetailResponse) {
                 val tvEntity = TvEntity(
@@ -85,7 +77,6 @@ class MainRepository @Inject constructor(
                 )
 
                 tvResult.postValue(tvEntity)
-                EspressoIdlingResource.decrement()
             }
         }, id)
         return tvResult

@@ -5,6 +5,7 @@ import android.os.Looper
 import android.util.Log
 import com.rezyfr.dicoding.bajp.data.source.remote.network.ApiService
 import com.rezyfr.dicoding.bajp.data.source.remote.response.*
+import com.rezyfr.dicoding.bajp.utils.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +22,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
     }
 
     fun getMovieList(callback: GetMovieListCallback) {
+        EspressoIdlingResource.increment()
         handler.postDelayed({
             apiService.getDiscoverMovie().enqueue(object : Callback<MovieListResponse>{
                 override fun onResponse(
@@ -28,6 +30,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
                     response: Response<MovieListResponse>
                 ) {
                     response.body()?.results?.let { callback.onResponse(it) }
+                    EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
@@ -39,6 +42,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
     }
 
     fun getMovieDetail(callback: GetMovieDetailCallback, id: Int) {
+        EspressoIdlingResource.increment()
         handler.postDelayed({
             apiService.getMovieDetail(id).enqueue(object : Callback<MovieDetailResponse>{
                 override fun onResponse(
@@ -46,6 +50,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
                     response: Response<MovieDetailResponse>
                 ) {
                     response.body()?.let { callback.onResponse(it) }
+                EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(call: Call<MovieDetailResponse>, t: Throwable) {
@@ -57,6 +62,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
     }
 
     fun getTvList(callback: GetTvListCallback) {
+        EspressoIdlingResource.increment()
         handler.postDelayed({
             apiService.getDiscoverTv().enqueue(object : Callback<TvListResponse>{
                 override fun onResponse(
@@ -64,6 +70,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
                     response: Response<TvListResponse>
                 ) {
                     response.body()?.results?.let { callback.onResponse(it) }
+                EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(call: Call<TvListResponse>, t: Throwable) {
@@ -75,6 +82,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
     }
 
     fun getTvDetail(callback: GetTvDetailCallback, id: Int) {
+        EspressoIdlingResource.increment()
         handler.postDelayed({
             apiService.getTvDetail(id).enqueue(object : Callback<TvDetailResponse>{
                 override fun onResponse(
@@ -82,6 +90,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService){
                     response: Response<TvDetailResponse>
                 ) {
                     response.body()?.let { callback.onResponse(it) }
+                EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(call: Call<TvDetailResponse>, t: Throwable) {

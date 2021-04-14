@@ -7,7 +7,6 @@ import com.rezyfr.dicoding.bajp.data.source.remote.RemoteDataSource
 import com.rezyfr.dicoding.bajp.ui.utils.LiveDataTestUtil
 import com.rezyfr.dicoding.bajp.ui.utils.MovieItemDummy
 import com.rezyfr.dicoding.bajp.ui.utils.TvItemDummy
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Rule
@@ -43,7 +42,7 @@ class MainRepositoryTest {
         }.`when`(remote).getMovieList(any())
         val movieEntities = LiveDataTestUtil.getValue(mainRepository.getMovieList())
         verify(remote).getMovieList(any())
-        Assert.assertNotNull(movieEntities)
+        assertNotNull(movieEntities)
         assertEquals(movieListResponse.results?.size?.toLong(), movieEntities.size.toLong())
     }
 
@@ -58,7 +57,7 @@ class MainRepositoryTest {
         }.`when`(remote).getTvList(any())
         val tvEntities = LiveDataTestUtil.getValue(mainRepository.getTvList())
         verify(remote).getTvList(any())
-        Assert.assertNotNull(tvEntities)
+        assertNotNull(tvEntities)
         assertEquals(tvListResponse.results?.get(0)?.id, tvEntities[0].id)
     }
 
