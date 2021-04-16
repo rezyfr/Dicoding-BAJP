@@ -10,6 +10,7 @@ import com.rezyfr.dicoding.bajp.ui.detail.DetailViewModel
 import com.rezyfr.dicoding.bajp.ui.utils.MovieItemDummy
 import com.rezyfr.dicoding.bajp.ui.utils.TvItemDummy
 import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertNotSame
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -52,6 +53,30 @@ class DetailViewModelTest {
     }
 
     @Test
+    fun getWrongMovieDetail(){
+        val movie = MutableLiveData<MovieEntity>()
+        val detail = MovieItemDummy.getMovieDetail()
+        movie.value = MovieEntity(
+            detail.id,
+            detail.title,
+            detail.overview,
+            detail.posterPath,
+            detail.releaseDate
+        )
+        `when`(data.getMovieDetail(0)).thenReturn(movie)
+        val observer = mock(Observer::class.java)
+        viewModel?.getMovieById(movie.value?.id!!)?.observeForever(observer as Observer<MovieEntity>)
+        verify(data).getMovieDetail(791373)
+
+        assertNotSame(movie.value!!.id, viewModel?.getMovieById(movie.value?.id!!)?.value?.id)
+        assertNotSame(movie.value!!.itemTitle, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemTitle)
+        assertNotSame(movie.value!!.itemDesc, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemDesc)
+        assertNotSame(movie.value!!.itemPhoto, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemPhoto)
+        assertNotSame(movie.value!!.itemDate, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemDate)
+    }
+
+
+    @Test
     fun getTvDetail(){
         val tv = MutableLiveData<TvEntity>()
         val detail = TvItemDummy.getTvDetail()
@@ -72,5 +97,28 @@ class DetailViewModelTest {
         assertEquals(tv.value!!.tvDesc, viewModel?.getTvById(tv.value?.id!!)?.value?.tvDesc)
         assertEquals(tv.value!!.tvPhoto, viewModel?.getTvById(tv.value?.id!!)?.value?.tvPhoto)
         assertEquals(tv.value!!.tvDate, viewModel?.getTvById(tv.value?.id!!)?.value?.tvDate)
+    }
+
+    @Test
+    fun getWrongTvDetail(){
+        val tv = MutableLiveData<TvEntity>()
+        val detail = TvItemDummy.getTvDetail()
+        tv.value = TvEntity(
+            detail.id,
+            detail.name,
+            detail.overview,
+            detail.posterPath,
+            detail.firstAirDate
+        )
+        `when`(data.getTvDetail(0)).thenReturn(tv)
+        val observer = mock(Observer::class.java)
+        viewModel?.getTvById(tv.value?.id!!)?.observeForever(observer as Observer<TvEntity>)
+        verify(data).getTvDetail(88396)
+
+        assertNotSame(tv.value!!.id, viewModel?.getTvById(tv.value?.id!!)?.value?.id)
+        assertNotSame(tv.value!!.tvTitle, viewModel?.getTvById(tv.value?.id!!)?.value?.tvTitle)
+        assertNotSame(tv.value!!.tvDesc, viewModel?.getTvById(tv.value?.id!!)?.value?.tvDesc)
+        assertNotSame(tv.value!!.tvPhoto, viewModel?.getTvById(tv.value?.id!!)?.value?.tvPhoto)
+        assertNotSame(tv.value!!.tvDate, viewModel?.getTvById(tv.value?.id!!)?.value?.tvDate)
     }
 }

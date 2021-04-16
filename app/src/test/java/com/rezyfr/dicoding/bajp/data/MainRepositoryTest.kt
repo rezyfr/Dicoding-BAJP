@@ -2,7 +2,6 @@ package com.rezyfr.dicoding.bajp.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.any
-import com.rezyfr.dicoding.bajp.data.source.MainRepository
 import com.rezyfr.dicoding.bajp.data.source.remote.RemoteDataSource
 import com.rezyfr.dicoding.bajp.ui.utils.LiveDataTestUtil
 import com.rezyfr.dicoding.bajp.ui.utils.MovieItemDummy
@@ -21,7 +20,7 @@ class MainRepositoryTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val remote = mock(RemoteDataSource::class.java)
-    private val mainRepository = MainRepository(remote)
+    private val mainRepository = FakeMainRepository(remote)
 
     private val movieListResponse = MovieItemDummy.getMovieListResponse()
     private val movieId = MovieItemDummy.getMovieListResponse().results?.get(0)?.id ?: 791373 //first item id
