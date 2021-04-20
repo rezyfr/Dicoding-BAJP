@@ -3,19 +3,21 @@ package com.rezyfr.dicoding.bajp.ui.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.rezyfr.dicoding.bajp.data.MainRepository
 import com.rezyfr.dicoding.bajp.data.source.local.entity.MovieEntity
 import com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity
+import com.rezyfr.dicoding.bajp.data.source.utils.Resource
 import com.rezyfr.dicoding.bajp.ui.main.ListViewModel
 import com.rezyfr.dicoding.bajp.ui.utils.MovieItemDummy
+import com.rezyfr.dicoding.bajp.ui.utils.PagedListUtil
 import com.rezyfr.dicoding.bajp.ui.utils.TvItemDummy
-import junit.framework.Assert.assertNotSame
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
 
 class ListViewModelTest {
 
@@ -24,85 +26,79 @@ class ListViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private var viewModel: ListViewModel? = null
-    private var data = Mockito.mock(MainRepository::class.java)
+    private var repo = Mockito.mock(MainRepository::class.java)
 
     @Before
     fun setUp() {
-        viewModel = ListViewModel(data)
+        viewModel = ListViewModel(repo)
     }
 
     @Test
     fun getMovieList() {
-        val movie = MutableLiveData<List<MovieEntity>>()
-        movie.value = MovieItemDummy.getMovieListResponse().results?.map {
-            MovieEntity(
-                it.id,
-                it.title,
-                it.overview,
-                it.posterPath,
-                it.releaseDate
-            )
-        }
-        `when`(data.getMovieList()).thenReturn(movie)
-        val observer = Mockito.mock(Observer::class.java)
-        viewModel?.movieList()?.observeForever(observer as Observer<List<MovieEntity>>)
-        verify(data).getMovieList()
+        val pagedList = PagedListUtil.mockPagedList(MovieItemDummy.getMovieListResponse())
+        val movie = Resource.success(pagedList)
+        `when`(movie.data?.size).thenReturn(3)
+        val movieEntity = MutableLiveData<Resource<PagedList<MovieEntity>>>()
+        movieEntity.value = movie
+        `when`(repo.getMovieList()).thenReturn(movieEntity)
+        val movieEntities = viewModel?.movieList()?.value?.data
+        Mockito.verify(repo).getMovieList()
+        Assert.assertNotNull(movieEntities)
+        Assert.assertEquals(3, movieEntities?.size)
+        val observer = Mockito.mock(Observer::class.java) as Observer<in Resource<PagedList<MovieEntity>>>
+        viewModel?.movieList()?.observeForever(observer)
+        Mockito.verify(observer).onChanged(movie)
     }
 
     @Test
     fun getWrongMovieList() {
-        val movie = MutableLiveData<List<MovieEntity>>()
-        movie.value = MovieItemDummy.getMovieListResponse().results?.map {
-            MovieEntity(
-                it.id,
-                it.title,
-                it.overview,
-                it.posterPath,
-                it.releaseDate
-            )
-        }
-        `when`(data.getMovieList()).thenReturn(movie)
-        val observer = Mockito.mock(Observer::class.java)
-        viewModel?.movieList()?.observeForever(observer as Observer<List<MovieEntity>>)
-        verify(data).getMovieList()
-        assertNotSame(movie.value, viewModel?.tvList()?.value)
+        val pagedList = PagedListUtil.mockPagedList(MovieItemDummy.getMovieListResponse())
+        val movie = Resource.success(pagedList)
+        `when`(movie.data?.size).thenReturn(0)
+        val movieEntity = MutableLiveData<Resource<PagedList<MovieEntity>>>()
+        movieEntity.value = movie
+        `when`(repo.getMovieList()).thenReturn(movieEntity)
+        val movieEntities = viewModel?.movieList()?.value?.data
+        Mockito.verify(repo).getMovieList()
+        Assert.assertNotNull(movieEntities)
+        Assert.assertNotEquals(3, movieEntities?.size)
+        val observer = Mockito.mock(Observer::class.java) as Observer<in Resource<PagedList<MovieEntity>>>
+        viewModel?.movieList()?.observeForever(observer)
+        Mockito.verify(observer).onChanged(movie)
     }
 
     @Test
     fun getTvList() {
-        val tv = MutableLiveData<List<TvEntity>>()
-        tv.value = TvItemDummy.getTvListResponse().results?.map {
-            TvEntity(
-                it.id,
-                it.name,
-                it.overview,
-                it.posterPath,
-                it.firstAirDate
-            )
-        }
-        `when`(data.getTvList()).thenReturn(tv)
-        val observer = Mockito.mock(Observer::class.java)
-        viewModel?.tvList()?.observeForever(observer as Observer<List<TvEntity>>)
-        verify(data).getTvList()
+        val pagedList = PagedListUtil.mockPagedList(TvItemDummy.getTvListResponse())
+        val tv = Resource.success(pagedList)
+        `when`(tv.data?.size).thenReturn(3)
+        val tvEntity = MutableLiveData<Resource<PagedList<TvEntity>>>()
+        tvEntity.value = tv
+        `when`(repo.getTvList()).thenReturn(tvEntity)
+        val tvEntities = viewModel?.tvList()?.value?.data
+        Mockito.verify(repo).getTvList()
+        Assert.assertNotNull(tvEntities)
+        Assert.assertEquals(3, tvEntities?.size)
+        val observer = Mockito.mock(Observer::class.java) as Observer<in Resource<PagedList<TvEntity>>>
+        viewModel?.tvList()?.observeForever(observer)
+        Mockito.verify(observer).onChanged(tv)
     }
 
     @Test
     fun getWrongTvList() {
-        val tv = MutableLiveData<List<TvEntity>>()
-        tv.value = TvItemDummy.getTvListResponse().results?.map {
-            TvEntity(
-                it.id,
-                it.name,
-                it.overview,
-                it.posterPath,
-                it.firstAirDate
-            )
-        }
-        `when`(data.getTvList()).thenReturn(tv)
-        val observer = Mockito.mock(Observer::class.java)
-        viewModel?.tvList()?.observeForever(observer as Observer<List<TvEntity>>)
-        verify(data).getTvList()
-        assertNotSame(tv.value, viewModel?.movieList()?.value)
+        val pagedList = PagedListUtil.mockPagedList(TvItemDummy.getTvListResponse())
+        val tv = Resource.success(pagedList)
+        `when`(tv.data?.size).thenReturn(0)
+        val tvEntity = MutableLiveData<Resource<PagedList<TvEntity>>>()
+        tvEntity.value = tv
+        `when`(repo.getTvList()).thenReturn(tvEntity)
+        val tvEntities = viewModel?.tvList()?.value?.data
+        Mockito.verify(repo).getTvList()
+        Assert.assertNotNull(tvEntities)
+        Assert.assertNotEquals(3, tvEntities?.size)
+        val observer = Mockito.mock(Observer::class.java) as Observer<in Resource<PagedList<TvEntity>>>
+        viewModel?.tvList()?.observeForever(observer)
+        Mockito.verify(observer).onChanged(tv)
     }
 
 }

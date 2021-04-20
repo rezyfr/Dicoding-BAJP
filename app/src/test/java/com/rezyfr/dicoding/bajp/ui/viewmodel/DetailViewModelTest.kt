@@ -6,15 +6,16 @@ import androidx.lifecycle.Observer
 import com.rezyfr.dicoding.bajp.data.MainRepository
 import com.rezyfr.dicoding.bajp.data.source.local.entity.MovieEntity
 import com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity
+import com.rezyfr.dicoding.bajp.data.source.utils.Resource
 import com.rezyfr.dicoding.bajp.ui.detail.DetailViewModel
 import com.rezyfr.dicoding.bajp.ui.utils.MovieItemDummy
 import com.rezyfr.dicoding.bajp.ui.utils.TvItemDummy
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNotSame
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 
 class DetailViewModelTest {
     @Rule
@@ -22,103 +23,63 @@ class DetailViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private var viewModel: DetailViewModel? = null
-    private var data = mock(MainRepository::class.java)
+    private var repo = mock(MainRepository::class.java)
+    private var movieDetail = MovieItemDummy.getMovieDetail()
+    private var movieId = movieDetail.id
+    private var tvDetail = TvItemDummy.getTvDetail()
+    private var tvId = tvDetail.id
 
     @Before
     fun setUp(){
-        viewModel = DetailViewModel(data)
+        viewModel = DetailViewModel(repo)
     }
 
     @Test
-    fun getMovieDetail(){
-        val movie = MutableLiveData<MovieEntity>()
-        val detail = MovieItemDummy.getMovieDetail()
-        movie.value = MovieEntity(
-            detail.id,
-            detail.title,
-            detail.overview,
-            detail.posterPath,
-            detail.releaseDate
-        )
-        `when`(data.getMovieDetail(movie.value?.id!!)).thenReturn(movie)
-        val observer = mock(Observer::class.java)
-        viewModel?.getMovieById(movie.value?.id!!)?.observeForever(observer as Observer<MovieEntity>)
-//        verify(data).getMovieDetail(791373)
-
-        assertEquals(movie.value!!.id, viewModel?.getMovieById(movie.value?.id!!)?.value?.id)
-        assertEquals(movie.value!!.itemTitle, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemTitle)
-        assertEquals(movie.value!!.itemDesc, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemDesc)
-        assertEquals(movie.value!!.itemPhoto, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemPhoto)
-        assertEquals(movie.value!!.itemDate, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemDate)
+    fun getDetailMovie() {
+        movieId?.let { viewModel?.setSelectedItem(it) }
+        val dummyDetailMovie = Resource.success(movieDetail)
+        val detailMovie = MutableLiveData<Resource<MovieEntity>>()
+        detailMovie.value = dummyDetailMovie
+        `when`(repo.getMovieDetail(movieId as Int)).thenReturn(detailMovie)
+        val observer = mock(Observer::class.java) as Observer<in Resource<MovieEntity>>
+        viewModel?.detailMovie?.observeForever(observer )
+        Assert.assertEquals(dummyDetailMovie.data?.id,  viewModel?.detailMovie?.value?.data?.id)
     }
 
     @Test
     fun getWrongMovieDetail(){
-        val movie = MutableLiveData<MovieEntity>()
-        val detail = MovieItemDummy.getMovieDetail()
-        movie.value = MovieEntity(
-            detail.id,
-            detail.title,
-            detail.overview,
-            detail.posterPath,
-            detail.releaseDate
-        )
-        `when`(data.getMovieDetail(0)).thenReturn(movie)
-        val observer = mock(Observer::class.java)
-        viewModel?.getMovieById(movie.value?.id!!)?.observeForever(observer as Observer<MovieEntity>)
-        verify(data).getMovieDetail(791373)
-
-        assertNotSame(movie.value!!.id, viewModel?.getMovieById(movie.value?.id!!)?.value?.id)
-        assertNotSame(movie.value!!.itemTitle, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemTitle)
-        assertNotSame(movie.value!!.itemDesc, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemDesc)
-        assertNotSame(movie.value!!.itemPhoto, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemPhoto)
-        assertNotSame(movie.value!!.itemDate, viewModel?.getMovieById(movie.value?.id!!)?.value?.itemDate)
+        movieId?.let { viewModel?.setSelectedItem(it) }
+        val dummyDetailMovie = Resource.success(movieDetail)
+        val detailMovie = MutableLiveData<Resource<MovieEntity>>()
+        detailMovie.value = dummyDetailMovie
+        `when`(repo.getMovieDetail(231)).thenReturn(detailMovie)
+        val observer = mock(Observer::class.java) as Observer<in Resource<MovieEntity>>
+        viewModel?.detailMovie?.observeForever(observer )
+        Assert.assertNotEquals(dummyDetailMovie.data?.id,  viewModel?.detailMovie?.value?.data?.id)
     }
-
-
     @Test
-    fun getTvDetail(){
-        val tv = MutableLiveData<TvEntity>()
-        val detail = TvItemDummy.getTvDetail()
-        tv.value = TvEntity(
-            detail.id,
-            detail.name,
-            detail.overview,
-            detail.posterPath,
-            detail.firstAirDate
-        )
-        `when`(data.getTvDetail(tv.value?.id!!)).thenReturn(tv)
-        val observer = mock(Observer::class.java)
-        viewModel?.getTvById(tv.value?.id!!)?.observeForever(observer as Observer<TvEntity>)
-        verify(data).getTvDetail(88396)
-
-        assertEquals(tv.value!!.id, viewModel?.getTvById(tv.value?.id!!)?.value?.id)
-        assertEquals(tv.value!!.tvTitle, viewModel?.getTvById(tv.value?.id!!)?.value?.tvTitle)
-        assertEquals(tv.value!!.tvDesc, viewModel?.getTvById(tv.value?.id!!)?.value?.tvDesc)
-        assertEquals(tv.value!!.tvPhoto, viewModel?.getTvById(tv.value?.id!!)?.value?.tvPhoto)
-        assertEquals(tv.value!!.tvDate, viewModel?.getTvById(tv.value?.id!!)?.value?.tvDate)
+    fun getDetailTv() {
+        tvId?.let { viewModel?.setSelectedItem(it) }
+        val dummyDetailTv = Resource.success(tvDetail)
+        val detailTv = MutableLiveData<Resource<TvEntity>>()
+        detailTv.value = dummyDetailTv
+        `when`(repo.getTvDetail(tvId as Int)).thenReturn(detailTv)
+        val observer = mock(Observer::class.java) as Observer<in Resource<TvEntity>>
+        viewModel?.detailTv?.observeForever(observer )
+        Assert.assertNotNull(dummyDetailTv.data)
+        Assert.assertEquals(dummyDetailTv.data?.id,  viewModel?.detailTv?.value?.data?.id)
     }
 
     @Test
     fun getWrongTvDetail(){
-        val tv = MutableLiveData<TvEntity>()
-        val detail = TvItemDummy.getTvDetail()
-        tv.value = TvEntity(
-            detail.id,
-            detail.name,
-            detail.overview,
-            detail.posterPath,
-            detail.firstAirDate
-        )
-        `when`(data.getTvDetail(0)).thenReturn(tv)
-        val observer = mock(Observer::class.java)
-        viewModel?.getTvById(tv.value?.id!!)?.observeForever(observer as Observer<TvEntity>)
-        verify(data).getTvDetail(88396)
-
-        assertNotSame(tv.value!!.id, viewModel?.getTvById(tv.value?.id!!)?.value?.id)
-        assertNotSame(tv.value!!.tvTitle, viewModel?.getTvById(tv.value?.id!!)?.value?.tvTitle)
-        assertNotSame(tv.value!!.tvDesc, viewModel?.getTvById(tv.value?.id!!)?.value?.tvDesc)
-        assertNotSame(tv.value!!.tvPhoto, viewModel?.getTvById(tv.value?.id!!)?.value?.tvPhoto)
-        assertNotSame(tv.value!!.tvDate, viewModel?.getTvById(tv.value?.id!!)?.value?.tvDate)
+//        tvId?.let { viewModel?.setSelectedItem(it) }
+        val dummyDetailTv = Resource.success(tvDetail)
+        val detailTv = MutableLiveData<Resource<TvEntity>>()
+        detailTv.value = dummyDetailTv
+        `when`(repo.getTvDetail(231)).thenReturn(detailTv)
+        val observer = mock(Observer::class.java) as Observer<in Resource<TvEntity>>
+        viewModel?.detailTv?.observeForever(observer )
+        Assert.assertNotEquals(dummyDetailTv.data?.id,  viewModel?.detailTv?.value?.data?.id)
     }
+
 }

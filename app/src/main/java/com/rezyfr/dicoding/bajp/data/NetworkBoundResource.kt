@@ -25,7 +25,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mAppExe
         }
     }
 
-    protected fun onFetchFailed() {}
+    private fun onFetchFailed() {}
 
     protected abstract fun loadFromDB(): LiveData<ResultType>
 

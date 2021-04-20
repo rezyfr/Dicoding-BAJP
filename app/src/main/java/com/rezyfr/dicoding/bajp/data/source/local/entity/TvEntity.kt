@@ -11,7 +11,6 @@ data class TvEntity(
     val tvDesc: String?,
     val tvPhoto: String?,
     val tvDate: String?,
-    val tvLastAirDate: String? = null,
     var isFavorite: Boolean = false
 ){
 

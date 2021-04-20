@@ -13,10 +13,10 @@ object SortUtils {
     fun getMoviesSortedQuery(filter: String): SimpleSQLiteQuery {
         val simpleQuery = StringBuilder().append("SELECT * FROM movie WHERE isFavorite = 1 ")
         when (filter) {
-            ASCENDING -> simpleQuery.append("ORDER BY title ASC")
-            DESCENDING -> simpleQuery.append("ORDER BY title DESC")
-            NEWEST -> simpleQuery.append("ORDER BY releaseDate DESC")
-            OLDEST -> simpleQuery.append("ORDER BY releaseDate ASC")
+            ASCENDING -> simpleQuery.append("ORDER BY itemTitle ASC")
+            DESCENDING -> simpleQuery.append("ORDER BY itemTitle DESC")
+            NEWEST -> simpleQuery.append("ORDER BY itemDate ASC")
+            OLDEST -> simpleQuery.append("ORDER BY itemDate DESC")
             DEFAULT -> simpleQuery.append("")
         }
         return SimpleSQLiteQuery(simpleQuery.toString())
@@ -25,10 +25,10 @@ object SortUtils {
     fun getTvShowsSortedQuery(filter: String): SimpleSQLiteQuery {
         val simpleQuery = StringBuilder().append("SELECT * FROM tv WHERE isFavorite = 1 ")
         when (filter) {
-            ASCENDING -> simpleQuery.append("ORDER BY name ASC")
-            DESCENDING -> simpleQuery.append("ORDER BY name DESC")
-            NEWEST -> simpleQuery.append("ORDER BY firstAirDate DESC")
-            OLDEST -> simpleQuery.append("ORDER BY firstAirDate ASC")
+            ASCENDING -> simpleQuery.append("ORDER BY tvTitle ASC")
+            DESCENDING -> simpleQuery.append("ORDER BY tvTitle DESC")
+            NEWEST -> simpleQuery.append("ORDER BY tvDate ASC")
+            OLDEST -> simpleQuery.append("ORDER BY tvDate DESC")
             DEFAULT -> simpleQuery.append("")
         }
         return SimpleSQLiteQuery(simpleQuery.toString())

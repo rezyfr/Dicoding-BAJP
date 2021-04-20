@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
-            toolbar.apply {
+            toolbarMain.apply {
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.menu_favorite -> {
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
+            toolbarMain.title = resources.getString(R.string.app_name)
             vpMain.adapter = ListViewPagerAdapter(supportFragmentManager)
             tablayoutMain.setupWithViewPager(vpMain)
         }

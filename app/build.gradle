@@ -95,7 +95,6 @@ dependencies {
     testImplementation Dependencies.mockitoInline
     testImplementation Dependencies.mockitoKotlin
     testImplementation Dependencies.coreTest
-    testImplementation Dependencies.mockk
 
     implementation Dependencies.hilt
     implementation Dependencies.hiltViewModel

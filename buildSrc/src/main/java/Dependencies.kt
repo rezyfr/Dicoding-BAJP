@@ -51,7 +51,6 @@ object Versions {
     const val mockitoVersion = "3.6.0"
     const val mockitoKotlinVersion = "2.2.0"
     const val idleResourceVersion = "3.3.0"
-    const val mockkVersion = "1.10.0"
 }
 
 object Dependencies {
@@ -115,7 +114,6 @@ object Dependencies {
         "androidx.test.espresso:espresso-contrib:${Versions.espressoVersion}"
     const val testRule = "androidx.test:rules:${Versions.androidTestVersion}"
 
-    const val mockk = "io.mockk:mockk:${Versions.mockkVersion}"
     const val mockitoCore = "org.mockito:mockito-core:${Versions.mockitoVersion}"
     const val mockitoInline = "org.mockito:mockito-inline:${Versions.mockitoVersion}"
     const val mockitoKotlin =

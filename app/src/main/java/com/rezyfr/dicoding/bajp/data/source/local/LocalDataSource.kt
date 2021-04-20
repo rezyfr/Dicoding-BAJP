@@ -1,6 +1,5 @@
 package com.rezyfr.dicoding.bajp.data.source.local
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import com.rezyfr.dicoding.bajp.data.source.local.entity.MovieEntity
@@ -8,9 +7,6 @@ import com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity
 import com.rezyfr.dicoding.bajp.data.source.local.room.MovieDao
 import com.rezyfr.dicoding.bajp.data.source.local.room.TvDao
 import com.rezyfr.dicoding.bajp.data.source.utils.SortUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,9 +14,6 @@ import javax.inject.Singleton
 class LocalDataSource @Inject constructor(private val movieDao: MovieDao, private val tvDao: TvDao) {
 
     fun getMovies(): DataSource.Factory<Int, MovieEntity>{
-        CoroutineScope(Dispatchers.IO).launch {
-            Log.d("LocalDataSource: ", "${movieDao.getMovieList().size}")
-        }
         return movieDao.getMovies()
     }
 
