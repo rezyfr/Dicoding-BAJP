@@ -35,6 +35,7 @@ object Versions {
     const val okHttpVersion = "4.7.2"
 
     const val pagingVersion = "3.0.0-alpha12"
+    const val roomVersion = "2.2.6"
 
     const val timberVersion = "4.7.1"
 
@@ -73,6 +74,11 @@ object Dependencies {
     const val navFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navVersion}"
     const val navUi = "androidx.navigation:navigation-ui-ktx:${Versions.navVersion}"
 
+    // room
+    const val roomRuntime = "androidx.room:room-runtime:${Versions.roomVersion}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.roomVersion}"
+    const val roomCompiler = "androidx.room:room-compiler:2.2.3" //kapt
+
     // hilt
     const val hilt = "androidx.hilt:hilt-common:${Versions.hiltVersion}"
     const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hiltVersion}"
@@ -82,7 +88,7 @@ object Dependencies {
     const val hiltTest =
         "com.google.dagger:hilt-android-testing:${Versions.daggerHiltVersion}" //androidTestImplementation
 
-    const val pagingRuntime = "androidx.paging:paging-runtime:${Versions.pagingVersion}"
+    const val pagingRuntime = "androidx.paging:paging-runtime-ktx:2.1.2"
 
     // Timber
     const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"

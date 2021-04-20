@@ -3,7 +3,7 @@ package com.rezyfr.dicoding.bajp.ui.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.rezyfr.dicoding.bajp.data.source.MainRepository
+import com.rezyfr.dicoding.bajp.data.MainRepository
 import com.rezyfr.dicoding.bajp.data.source.local.entity.MovieEntity
 import com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity
 import com.rezyfr.dicoding.bajp.ui.main.ListViewModel

@@ -3,5 +3,11 @@
     <string name="item_img_desc">Film Poster</string>
     <string name="splashscreen_logo">Logo Splashscreen</string>
     <string name="splashscreen_title">Dicoding Jetpack 1</string>
+    <string name="cd_fab">Floating button for adding item to favorite</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="chip_new">Newest</string>
+    <string name="chip_old">Oldest</string>
+    <string name="chip_asc">A-Z</string>
+    <string name="chip_desc">Z-A</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

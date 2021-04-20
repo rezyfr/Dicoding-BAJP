@@ -10,6 +10,22 @@
         <variable
             name="tv"
             type="com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="image"
+            type="String" />
+
+        <variable
+            name="date"
+            type="String" />
+
+        <variable
+            name="desc"
+            type="String" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -29,7 +45,7 @@
                 android:layout_width="100dp"
                 android:layout_height="150dp"
                 android:contentDescription="@string/item_img_desc"
-                imageUrl="@{movie.posterImage ?? tv.posterImage}" />
+                imageUrl="@{image}" />
 
             <TextView
                 android:id="@+id/txt_title"
@@ -38,7 +54,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_toEndOf="@id/img_photo"
                 android:fontFamily="sans-serif-black"
-                android:text="@{movie.itemTitle ?? tv.tvTitle}"
+                android:text="@{title}"
                 android:textSize="18sp" />
 
             <TextView
@@ -51,7 +67,7 @@
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-light"
                 android:maxLines="3"
-                android:text="@{movie.itemDate ?? tv.tvDate}"
+                android:text="@{date}"
                 android:textSize="18sp" />
 
             <TextView
@@ -65,7 +81,7 @@
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:maxLines="3"
-                android:text="@{movie.itemDesc ?? tv.tvDate}"
+                android:text="@{desc}"
                 android:textSize="14sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

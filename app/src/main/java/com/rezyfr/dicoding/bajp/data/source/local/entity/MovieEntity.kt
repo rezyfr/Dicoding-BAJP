@@ -1,13 +1,17 @@
 package com.rezyfr.dicoding.bajp.data.source.local.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.rezyfr.dicoding.bajp.BuildConfig
 
+@Entity(tableName = "movie")
 data class MovieEntity(
-    val id: Int?,
-    val itemTitle: String?,
-    val itemDesc: String?,
-    val itemPhoto: String?,
-    val itemDate: String?,
+    @PrimaryKey(autoGenerate = false) var id: Int?,
+    var itemTitle: String?,
+    var itemDesc: String?,
+    var itemPhoto: String?,
+    var itemDate: String?,
+    var isFavorite: Boolean = false
 ){
 
     fun getPosterImage() =

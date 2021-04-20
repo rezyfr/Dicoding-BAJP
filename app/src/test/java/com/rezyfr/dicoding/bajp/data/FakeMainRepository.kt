@@ -2,7 +2,6 @@ package com.rezyfr.dicoding.bajp.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.rezyfr.dicoding.bajp.data.source.IMainRepository
 import com.rezyfr.dicoding.bajp.data.source.local.entity.MovieEntity
 import com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity
 import com.rezyfr.dicoding.bajp.data.source.remote.RemoteDataSource
