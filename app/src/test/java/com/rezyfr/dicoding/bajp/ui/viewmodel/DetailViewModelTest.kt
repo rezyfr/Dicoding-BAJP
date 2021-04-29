@@ -14,6 +14,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 
@@ -72,7 +73,6 @@ class DetailViewModelTest {
 
     @Test
     fun getWrongTvDetail(){
-//        tvId?.let { viewModel?.setSelectedItem(it) }
         val dummyDetailTv = Resource.success(tvDetail)
         val detailTv = MutableLiveData<Resource<TvEntity>>()
         detailTv.value = dummyDetailTv
@@ -80,6 +80,32 @@ class DetailViewModelTest {
         val observer = mock(Observer::class.java) as Observer<in Resource<TvEntity>>
         viewModel?.detailTv?.observeForever(observer )
         Assert.assertNotEquals(dummyDetailTv.data?.id,  viewModel?.detailTv?.value?.data?.id)
+    }
+
+    @Test
+    fun setFavoriteMovie() {
+        val dummyDetailMovie = Resource.success(movieDetail)
+        val detailMovie = MutableLiveData<Resource<MovieEntity>>()
+        detailMovie.value = dummyDetailMovie
+        viewModel?.detailMovie = detailMovie
+        dummyDetailMovie.data
+            ?.let { Mockito.doNothing().`when`(repo).setFavoriteMovie(it, true) }
+        viewModel?.setMovieFavorite()
+        Mockito.verify(repo)
+            .setFavoriteMovie(detailMovie.value?.data as MovieEntity, true)
+    }
+
+    @Test
+    fun setFavoriteTv() {
+        val dummyDetailTv = Resource.success(tvDetail)
+        val detailTv = MutableLiveData<Resource<TvEntity>>()
+        detailTv.value = dummyDetailTv
+        viewModel?.detailTv = detailTv
+        dummyDetailTv.data
+            ?.let { Mockito.doNothing().`when`(repo).setFavoriteTv(it, true) }
+        viewModel?.setTvFavorite()
+        Mockito.verify(repo)
+            .setFavoriteTv(detailTv.value?.data as TvEntity, true)
     }
 
 }

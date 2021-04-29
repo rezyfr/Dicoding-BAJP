@@ -8,6 +8,7 @@ import com.rezyfr.dicoding.bajp.data.source.local.entity.MovieEntity
 import com.rezyfr.dicoding.bajp.data.source.local.entity.TvEntity
 import com.rezyfr.dicoding.bajp.data.source.remote.RemoteDataSource
 import com.rezyfr.dicoding.bajp.data.source.utils.Resource
+import com.rezyfr.dicoding.bajp.data.source.utils.SortUtils
 import com.rezyfr.dicoding.bajp.ui.utils.LiveDataTestUtil
 import com.rezyfr.dicoding.bajp.ui.utils.MovieItemDummy
 import com.rezyfr.dicoding.bajp.ui.utils.PagedListUtil
@@ -17,6 +18,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 
@@ -78,6 +80,30 @@ class MainRepositoryTest {
         val detailTv = LiveDataTestUtil.getValue(mainRepository.getTvDetail(tvId))
         assertNotNull(tvEntity)
         assertEquals(tvDetail.id, detailTv.data?.id)
+    }
+
+    @Test
+    fun getFavoriteMovies() {
+        val dataSourceFactory =
+            mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MovieEntity>
+        `when`(local.getFavoriteMovies(SortUtils.DEFAULT)).thenReturn(dataSourceFactory)
+        mainRepository.getFavoriteMovies(SortUtils.DEFAULT)
+        val dummyMovieEntities = Resource.success(PagedListUtil.mockPagedList(MovieItemDummy.getMovieListResponse()))
+        Mockito.verify(local).getFavoriteMovies(SortUtils.DEFAULT)
+        assertNotNull(dummyMovieEntities.data)
+        assertEquals(MovieItemDummy.getMovieListResponse().size, dummyMovieEntities.data?.size)
+    }
+
+    @Test
+    fun getFavoriteTvShows() {
+        val dataSourceFactory =
+            mock(DataSource.Factory::class.java) as DataSource.Factory<Int, TvEntity>
+        `when`(local.getFavoriteTvs(SortUtils.DEFAULT)).thenReturn(dataSourceFactory)
+        mainRepository.getFavoriteTvs(SortUtils.DEFAULT)
+        val dummyTvShowEntities = Resource.success(PagedListUtil.mockPagedList(TvItemDummy.getTvListResponse()))
+        Mockito.verify(local).getFavoriteTvs(SortUtils.DEFAULT)
+        assertNotNull(dummyTvShowEntities)
+        assertEquals(TvItemDummy.getTvListResponse().size, dummyTvShowEntities.data?.size)
     }
 
 }
