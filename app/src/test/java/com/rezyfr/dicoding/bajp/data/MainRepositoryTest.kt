@@ -106,4 +106,17 @@ class MainRepositoryTest {
         assertEquals(TvItemDummy.getTvListResponse().size, dummyTvShowEntities.data?.size)
     }
 
+    @Test
+    fun setFavoriteMovie() {
+        mainRepository.setFavoriteMovie(MovieItemDummy.getMovieDetail(), true)
+        Mockito.verify(local).setMovieFavorite(MovieItemDummy.getMovieDetail(), true)
+        Mockito.verifyNoMoreInteractions(local)
+    }
+
+    @Test
+    fun removeFavoriteMovie() {
+        mainRepository.setFavoriteMovie(MovieItemDummy.getMovieDetail(), false)
+        Mockito.verify(local).setMovieFavorite(MovieItemDummy.getMovieDetail(), false)
+        Mockito.verifyNoMoreInteractions(local)
+    }
 }

@@ -1,8 +1,6 @@
 package com.rezyfr.dicoding.bajp.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.rezyfr.dicoding.bajp.data.source.local.LocalDataSource
@@ -16,7 +14,6 @@ import com.rezyfr.dicoding.bajp.data.source.remote.response.TvDetailResponse
 import com.rezyfr.dicoding.bajp.data.source.remote.response.TvResponse
 import com.rezyfr.dicoding.bajp.data.source.utils.Resource
 import com.rezyfr.dicoding.bajp.utils.AppExecutors
-import javax.inject.Inject
 
 class FakeMainRepository (
     private val remoteDataSource: RemoteDataSource,
@@ -117,15 +114,11 @@ class FakeMainRepository (
     }
 
     override fun setFavoriteMovie(movieEntity: MovieEntity, isFavorite: Boolean) {
-        appExecutors.diskIO().execute{
             localDataSource.setMovieFavorite(movieEntity, isFavorite)
-        }
     }
 
     override fun setFavoriteTv(tvEntity: TvEntity, isFavorite: Boolean) {
-        appExecutors.diskIO().execute{
             localDataSource.setTvFavorite(tvEntity, isFavorite)
-        }
     }
 
     override fun getFavoriteMovies(sort: String): LiveData<PagedList<MovieEntity>> {
